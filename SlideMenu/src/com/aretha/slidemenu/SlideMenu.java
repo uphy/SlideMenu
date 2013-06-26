@@ -39,6 +39,7 @@ import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
 import com.aretha.slidemenu.utils.ScrollDetectors;
+import com.aretha.slidemenu.utils.ScrollDetectors.ScrollDetector;
 
 /**
  * Swipe left/right to show the hidden menu behind the content view, Use
@@ -252,7 +253,12 @@ public class SlideMenu extends ViewGroup {
 			android.view.ViewGroup.LayoutParams params) {
 		if (!(params instanceof LayoutParams)) {
 			throw new IllegalArgumentException(
-					"LayoutParams must a instance of LayoutParams");
+					"The parameter params must a instance of com.aretha.slidemenu.SlideMenu$LayoutParams");
+		}
+
+		if (null == params) {
+			// Skip the view without LayoutParams
+			return;
 		}
 
 		LayoutParams layoutParams = (LayoutParams) params;
@@ -710,7 +716,7 @@ public class SlideMenu extends ViewGroup {
 
 	private void setCurrentOffset(int currentOffset) {
 		final int slideDirectionFlag = mSlideDirectionFlag;
-		mCurrentContentOffset = Math
+		final int currentContentOffset = mCurrentContentOffset = Math
 				.min((slideDirectionFlag & FLAG_DIRECTION_RIGHT) == FLAG_DIRECTION_RIGHT ? mContentBoundsRight
 						: 0,
 						Math.max(
@@ -719,7 +725,6 @@ public class SlideMenu extends ViewGroup {
 										: 0));
 		if (null != mSlideStateChangeListener) {
 			float slideOffsetPercent = 0;
-			final int currentContentOffset = mCurrentContentOffset;
 			if (0 < currentContentOffset) {
 				slideOffsetPercent = currentContentOffset * 1.0f
 						/ mContentBoundsRight;
@@ -894,16 +899,21 @@ public class SlideMenu extends ViewGroup {
 		if (null == mContent) {
 			return;
 		}
+
 		final int left = mContent.getLeft();
 		final int width = mWidth;
 		final int height = mHeight;
-		mPrimaryShadowDrawable.setBounds((int) (left - mPrimaryShadowWidth), 0,
-				left, height);
-		mPrimaryShadowDrawable.draw(canvas);
+		if (null != mPrimaryShadowDrawable) {
+			mPrimaryShadowDrawable.setBounds(
+					(int) (left - mPrimaryShadowWidth), 0, left, height);
+			mPrimaryShadowDrawable.draw(canvas);
+		}
 
-		mSecondaryShadowDrawable.setBounds(left + width, 0,
-				(int) (width + left + mSecondaryShadowWidth), height);
-		mSecondaryShadowDrawable.draw(canvas);
+		if (null == mSecondaryShadowDrawable) {
+			mSecondaryShadowDrawable.setBounds(left + width, 0, (int) (width
+					+ left + mSecondaryShadowWidth), height);
+			mSecondaryShadowDrawable.draw(canvas);
+		}
 	}
 
 	@Override
