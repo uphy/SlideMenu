@@ -8,7 +8,7 @@ import com.aretha.slidemenu.SlideMenu.OnSlideStateChangeListener;
 import com.aretha.slidemenudemo.BaseSlideMenuActivity;
 import com.aretha.slidemenudemo.R;
 
-public class SlideMenuCallbackActivity extends BaseSlideMenuActivity implements
+public class SlideMenuCallback extends BaseSlideMenuActivity implements
 		OnSlideStateChangeListener {
 	private final static String OFFSET_PERCENT = "OffsetPercent";
 	private final static String SLIDE_STATE = "SlideState";

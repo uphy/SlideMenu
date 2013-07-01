@@ -27,6 +27,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -818,6 +819,7 @@ public class SlideMenu extends ViewGroup {
 			switch (layoutParams.role) {
 			case LayoutParams.ROLE_CONTENT:
 				// we should display the content in front of all other views
+				Log.e("Tank", "content");
 				child.bringToFront();
 				child.layout(mCurrentContentOffset + paddingLeft, paddingTop,
 						paddingLeft + measureWidth + mCurrentContentOffset,
@@ -909,7 +911,7 @@ public class SlideMenu extends ViewGroup {
 			mPrimaryShadowDrawable.draw(canvas);
 		}
 
-		if (null == mSecondaryShadowDrawable) {
+		if (null != mSecondaryShadowDrawable) {
 			mSecondaryShadowDrawable.setBounds(left + width, 0, (int) (width
 					+ left + mSecondaryShadowWidth), height);
 			mSecondaryShadowDrawable.draw(canvas);

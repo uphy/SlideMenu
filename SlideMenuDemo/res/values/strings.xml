@@ -16,6 +16,10 @@
     <string name="slidemenu_with_web_view">SlideMenu With WebView</string>
     <string name="slidemenu_with_horizontal_scroll_view_and_view_pager">SlideMenu With HorizontalScrollView And ViewPager</string>
     <string name="slidemenu_callback">SlideMenu Callback</string>
+    <string name="slidemenu_with_activity_group">SlideMenu With ActivityGroup</string>
+    <string name="primary_activity">Primary Activity</string>
+    <string name="secondary_activity">Secondary Activity</string>
+    <string name="content_activity">Content Activity</string>
     <string name="slidemenu_state">State: \n%1$s\nOffset: \n%2$s</string>
     <string name="slidemenu_state_close">Close</string>
     <string name="slidemenu_state_open">Open</string>

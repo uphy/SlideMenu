@@ -22,14 +22,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SlideMenuAttributeActivity"
+            android:name=".activity.SlideMenuAttribute"
             android:label="@string/slidemenu_attribute" >
             <intent-filter>
                 <action android:name="com.aretha.demobundle.DEMO" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SlideMenuCallbackActivity"
+            android:name=".activity.SlideMenuCallback"
             android:label="@string/slidemenu_callback" >
             <intent-filter>
                 <action android:name="com.aretha.demobundle.DEMO" />
@@ -59,6 +59,19 @@
         <activity
             android:name=".activity.SlideMenuWithHorizontalScrollViewAndViewPager"
             android:label="@string/slidemenu_with_horizontal_scroll_view_and_view_pager" >
+            <intent-filter>
+                <action android:name="com.aretha.demobundle.DEMO" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activitygroup.PrimaryActivity" >
+        </activity>
+        <activity android:name=".activitygroup.SecondaryActivity" >
+        </activity>
+        <activity android:name=".activitygroup.ContentActivity" >
+        </activity>
+        <activity
+            android:name=".activitygroup.SlideMenuWithActivityGroup"
+            android:label="@string/slidemenu_with_activity_group" >
             <intent-filter>
                 <action android:name="com.aretha.demobundle.DEMO" />
             </intent-filter>

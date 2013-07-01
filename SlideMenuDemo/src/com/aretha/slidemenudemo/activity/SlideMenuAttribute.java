@@ -13,7 +13,7 @@ import com.aretha.slidemenu.SlideMenu;
 import com.aretha.slidemenudemo.BaseSlideMenuActivity;
 import com.aretha.slidemenudemo.R;
 
-public class SlideMenuAttributeActivity extends BaseSlideMenuActivity implements
+public class SlideMenuAttribute extends BaseSlideMenuActivity implements
 		OnSeekBarChangeListener, OnCheckedChangeListener,
 		android.widget.RadioGroup.OnCheckedChangeListener, OnClickListener {
 	private SlideMenu mSlideMenu;

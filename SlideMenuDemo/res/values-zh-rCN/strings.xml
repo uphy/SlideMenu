@@ -17,6 +17,10 @@
     <string name="slidemenu_with_web_view">包含WebView的SlideMenu</string>
     <string name="slidemenu_with_horizontal_scroll_view_and_view_pager">包含HorizontalScrollView和ViewPager的SlideMenu</string>
     <string name="slidemenu_callback">SlideMenu的回调</string>
+    <string name="slidemenu_with_activity_group">包含Activity的SlideMenu</string>
+    <string name="primary_activity">主Activity</string>
+    <string name="secondary_activity">次Activity</string>
+    <string name="content_activity">内容Activity</string>
     <string name="slidemenu_state">状态: \n%1$s\n偏移比例: \n%2$s</string>
     <string name="slidemenu_state_close">关闭</string>
     <string name="slidemenu_state_open">打开</string>
