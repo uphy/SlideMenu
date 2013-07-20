@@ -8,6 +8,7 @@ import com.aretha.slidemenudemo.R;
 
 public class SlideMenuWithWebView extends BaseSlideMenuActivity {
 	private WebViewClient mViewClient = new WebViewClient() {
+		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			view.loadUrl(url);
 			return true;

@@ -27,17 +27,23 @@ public class SlideMenuWithActivityGroup extends ActivityGroup {
 		final LocalActivityManager activityManager = getLocalActivityManager();
 		View primary = activityManager.startActivity("PrimaryActivity",
 				new Intent(this, PrimaryActivity.class)).getDecorView();
-		mSlideMenu.addView(primary, new LayoutParams(200,
-				LayoutParams.MATCH_PARENT, LayoutParams.ROLE_PRIMARY_MENU));
+		mSlideMenu.addView(primary, new LayoutParams(
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				LayoutParams.ROLE_PRIMARY_MENU));
 
 		View secondary = activityManager.startActivity("SecondaryActivity",
 				new Intent(this, SecondaryActivity.class)).getDecorView();
-		mSlideMenu.addView(secondary, new LayoutParams(300,
-				LayoutParams.MATCH_PARENT, LayoutParams.ROLE_SECONDARY_MENU));
+		mSlideMenu.addView(secondary, new LayoutParams(
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				LayoutParams.ROLE_SECONDARY_MENU));
 
 		View content = activityManager.startActivity("ContentActivity",
 				new Intent(this, ContentActivity.class)).getDecorView();
-		mSlideMenu.addView(content, new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT, LayoutParams.ROLE_CONTENT));
+		mSlideMenu.addView(content, new LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				LayoutParams.ROLE_CONTENT));
 	}
 }

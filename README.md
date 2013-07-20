@@ -104,6 +104,6 @@ Please visit this [board][3] to see the plan of this repo
     limitations under the License.
 
 [1]: http://www.github.com/TangKe/SlideMenu.git
-[2]: https://github.com/TangKe/Aretha/wiki/SlideMenu.apk
+[2]: https://github.com/TangKe/SlideMenu/wiki/SlideMenu.apk
 [3]: https://trello.com/board/slidemenu/514932078a91614c640056df
 [4]: https://travis-ci.org/TangKe/SlideMenu

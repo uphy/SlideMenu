@@ -3,8 +3,7 @@ package com.aretha.slidemenudemo.activity;
 import com.aretha.slidemenudemo.BaseSlideMenuActivity;
 import com.aretha.slidemenudemo.R;
 
-public class SlideMenuWithHorizontalScrollView extends BaseSlideMenuActivity
-		 {
+public class SlideMenuWithHorizontalScrollView extends BaseSlideMenuActivity {
 	@Override
 	public void onContentChanged() {
 		super.onContentChanged();

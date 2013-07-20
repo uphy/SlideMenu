@@ -17,7 +17,7 @@ public class DragableFragmentPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		return BaseListFragment.instantiate(mContext,
+		return Fragment.instantiate(mContext,
 				"com.aretha.slidemenudemo.fragment.BaseListFragment");
 	}
 

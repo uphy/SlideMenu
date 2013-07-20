@@ -7,7 +7,7 @@ import com.aretha.slidemenudemo.R;
 import com.aretha.slidemenudemo.widget.DragableFragmentPagerAdapter;
 
 public class SlideMenuWithViewPager extends BaseSlideMenuActivity {
-	
+
 	@Override
 	public void onContentChanged() {
 		super.onContentChanged();

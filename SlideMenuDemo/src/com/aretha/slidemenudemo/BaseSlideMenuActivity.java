@@ -27,8 +27,8 @@ public class BaseSlideMenuActivity extends FragmentActivity {
 
 		getLayoutInflater().inflate(res, mSlideMenu, true);
 	}
-	
-	public SlideMenu getSlideMenu(){
+
+	public SlideMenu getSlideMenu() {
 		return mSlideMenu;
 	}
 }

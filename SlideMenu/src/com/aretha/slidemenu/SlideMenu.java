@@ -27,7 +27,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -104,12 +103,15 @@ public class SlideMenu extends ViewGroup {
 	private int mWidth;
 	private int mHeight;
 
+	private Drawable mDefaultContentBackground;
+
 	private OnSlideStateChangeListener mSlideStateChangeListener;
 
 	private VelocityTracker mVelocityTracker;
 	private Scroller mScroller;
 
 	private static final Interpolator mInterpolator = new Interpolator() {
+		@Override
 		public float getInterpolation(float t) {
 			t -= 1.0f;
 			return t * t * t * t * t + 1.0f;
@@ -155,9 +157,11 @@ public class SlideMenu extends ViewGroup {
 
 		mSlideDirectionFlag = a.getInt(R.styleable.SlideMenu_slideDirection,
 				FLAG_DIRECTION_LEFT | FLAG_DIRECTION_RIGHT);
+		a.recycle();
+
 		setFocusable(true);
 		setFocusableInTouchMode(true);
-		a.recycle();
+		mDefaultContentBackground = getDefaultContentBackground(context);
 	}
 
 	public SlideMenu(Context context, AttributeSet attrs) {
@@ -166,6 +170,13 @@ public class SlideMenu extends ViewGroup {
 
 	public SlideMenu(Context context) {
 		this(context, null);
+	}
+
+	protected Drawable getDefaultContentBackground(Context context) {
+		TypedValue value = new TypedValue();
+		context.getTheme().resolveAttribute(android.R.attr.windowBackground,
+				value, true);
+		return context.getResources().getDrawable(value.resourceId);
 	}
 
 	/**
@@ -819,7 +830,6 @@ public class SlideMenu extends ViewGroup {
 			switch (layoutParams.role) {
 			case LayoutParams.ROLE_CONTENT:
 				// we should display the content in front of all other views
-				Log.e("Tank", "content");
 				child.bringToFront();
 				child.layout(mCurrentContentOffset + paddingLeft, paddingTop,
 						paddingLeft + measureWidth + mCurrentContentOffset,
