@@ -10,6 +10,7 @@ SlideMenu is a open source android library provide slide effect to the layout an
 
 #Setup
 To enable fantasitic feature in your project with the following simple steps:
+
 1. Download the project from [GitHub][1]
 2. Import it to your Eclipse workspace
 3. Set your project properties, then add a android project library, and select SlideMenu
