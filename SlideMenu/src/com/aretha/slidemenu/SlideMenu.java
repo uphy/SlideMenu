@@ -557,10 +557,9 @@ public class SlideMenu extends ViewGroup {
 		final int currentState = mCurrentState;
 		final boolean isTapContent = mIsTapContent;
 
-		mVelocityTracker.addMovement(event);
-
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			mVelocityTracker.clear();
 			mPressedX = mLastMotionX = x;
 			mIsTapContent = isTapContent(x, y);
 			if (mIsTapContent) {
@@ -569,6 +568,7 @@ public class SlideMenu extends ViewGroup {
 			mVelocityTracker = VelocityTracker.obtain();
 			break;
 		case MotionEvent.ACTION_MOVE:
+			mVelocityTracker.addMovement(event);
 			if (Math.abs(x - mPressedX) >= mTouchSlop && isTapContent
 					&& currentState != STATE_DRAG) {
 				setCurrentState(STATE_DRAG);
@@ -590,7 +590,6 @@ public class SlideMenu extends ViewGroup {
 			} else if (isTapContent) {
 				performContentClick();
 			}
-			mVelocityTracker.recycle();
 			mIsTapContent = false;
 			break;
 		}
