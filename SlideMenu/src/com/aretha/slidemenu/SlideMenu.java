@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
@@ -110,7 +111,8 @@ public class SlideMenu extends ViewGroup {
 	private VelocityTracker mVelocityTracker;
 	private Scroller mScroller;
 
-	private static final Interpolator mInterpolator = new Interpolator() {
+	private Interpolator mInterpolator;
+	public final static Interpolator DEFAULT_INTERPOLATOR = new Interpolator() {
 		@Override
 		public float getInterpolation(float t) {
 			t -= 1.0f;
@@ -123,7 +125,6 @@ public class SlideMenu extends ViewGroup {
 		// we want to draw drop shadow of content
 		mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 		mVelocityTracker = VelocityTracker.obtain();
-		mScroller = new Scroller(context, mInterpolator);
 		mContentHitRect = new Rect();
 		STATUS_BAR_HEIGHT = (int) getStatusBarHeight(context);
 		setWillNotDraw(false);
@@ -154,6 +155,11 @@ public class SlideMenu extends ViewGroup {
 							Color.argb(99, 0, 0, 0), Color.TRANSPARENT });
 		}
 		setSecondaryShadowDrawable(secondaryShadowDrawable);
+
+		int interpolatorResId = a.getResourceId(
+				R.styleable.SlideMenu_interpolator, -1);
+		setInterpolator(-1 == interpolatorResId ? DEFAULT_INTERPOLATOR
+				: AnimationUtils.loadInterpolator(context, interpolatorResId));
 
 		mSlideDirectionFlag = a.getInt(R.styleable.SlideMenu_slideDirection,
 				FLAG_DIRECTION_LEFT | FLAG_DIRECTION_RIGHT);
@@ -310,6 +316,25 @@ public class SlideMenu extends ViewGroup {
 			return;
 		}
 		parent.removeView(view);
+	}
+
+	/**
+	 * Set animation interpolator when SlideMenu scroll
+	 * 
+	 * @param interpolator
+	 */
+	public void setInterpolator(Interpolator interpolator) {
+		mInterpolator = interpolator;
+		mScroller = new Scroller(getContext(), interpolator);
+	}
+
+	/**
+	 * Get the animation interpolator
+	 * 
+	 * @return
+	 */
+	public Interpolator getInterpolator() {
+		return mInterpolator;
 	}
 
 	/**
@@ -695,19 +720,17 @@ public class SlideMenu extends ViewGroup {
 	}
 
 	protected void endDrag(float x, float velocity) {
-		// TODO Not use this to detect whether we should scroll the content
-		// temporary
 		final int currentContentOffset = mCurrentContentOffset;
 		final int currentContentPosition = mCurrentContentPosition;
 		boolean velocityMatched = Math.abs(velocity) > 400;
 		switch (currentContentPosition) {
 		case POSITION_LEFT:
-			if ((velocity > 0 && velocityMatched)
-					|| (velocity <= 0 && !velocityMatched)) {
-				smoothScrollContentTo(0, velocity);
-			} else if ((velocity < 0 && velocityMatched)
+			if ((velocity < 0 && velocityMatched)
 					|| (velocity >= 0 && !velocityMatched)) {
 				smoothScrollContentTo(mContentBoundsLeft, velocity);
+			} else if ((velocity > 0 && velocityMatched)
+					|| (velocity <= 0 && !velocityMatched)) {
+				smoothScrollContentTo(0, velocity);
 			}
 			break;
 		case POSITION_MIDDLE:

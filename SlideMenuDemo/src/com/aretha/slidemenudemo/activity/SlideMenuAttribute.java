@@ -2,11 +2,24 @@ package com.aretha.slidemenudemo.activity;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import com.aretha.slidemenu.SlideMenu;
@@ -15,13 +28,15 @@ import com.aretha.slidemenudemo.R;
 
 public class SlideMenuAttribute extends BaseSlideMenuActivity implements
 		OnSeekBarChangeListener, OnCheckedChangeListener,
-		android.widget.RadioGroup.OnCheckedChangeListener, OnClickListener {
+		android.widget.RadioGroup.OnCheckedChangeListener, OnClickListener,
+		OnItemSelectedListener {
 	private SlideMenu mSlideMenu;
 	private SeekBar mPrimaryShadowWidth;
 	private SeekBar mSecondaryShadowWidth;
 	private RadioGroup mSlideMode;
 	private ToggleButton mSlideLeft;
 	private ToggleButton mSlideRight;
+	private Spinner mInterpolator;
 
 	@Override
 	public void onContentChanged() {
@@ -36,12 +51,17 @@ public class SlideMenuAttribute extends BaseSlideMenuActivity implements
 		mSlideMode = (RadioGroup) findViewById(R.id.slideMode);
 		mSlideLeft = (ToggleButton) findViewById(R.id.slideLeft);
 		mSlideRight = (ToggleButton) findViewById(R.id.slideRight);
+		mInterpolator = (Spinner) findViewById(R.id.interpolator);
 
 		mPrimaryShadowWidth.setOnSeekBarChangeListener(this);
 		mSecondaryShadowWidth.setOnSeekBarChangeListener(this);
 		mSlideMode.setOnCheckedChangeListener(this);
 		mSlideLeft.setOnCheckedChangeListener(this);
 		mSlideRight.setOnCheckedChangeListener(this);
+		mInterpolator.setOnItemSelectedListener(this);
+
+		mInterpolator.setAdapter(ArrayAdapter.createFromResource(this,
+				R.array.interpolator, android.R.layout.simple_list_item_1));
 	}
 
 	@Override
@@ -105,5 +125,45 @@ public class SlideMenuAttribute extends BaseSlideMenuActivity implements
 			mSlideMenu.close(true);
 			break;
 		}
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> adapterView, View view,
+			int position, long id) {
+		Interpolator interpolator;
+		switch (position) {
+		default:
+		case 0:
+			interpolator = SlideMenu.DEFAULT_INTERPOLATOR;
+			break;
+		case 1:
+			interpolator = new AccelerateDecelerateInterpolator();
+		case 2:
+			interpolator = new AccelerateInterpolator();
+			break;
+		case 3:
+			interpolator = new AnticipateInterpolator();
+			break;
+		case 4:
+			interpolator = new AnticipateOvershootInterpolator();
+		case 5:
+			interpolator = new BounceInterpolator();
+			break;
+		case 6:
+			interpolator = new DecelerateInterpolator();
+			break;
+		case 7:
+			interpolator = new LinearInterpolator();
+			break;
+		case 8:
+			interpolator = new OvershootInterpolator();
+			break;
+		}
+		mSlideMenu.setInterpolator(interpolator);
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> adapterView) {
+
 	}
 }

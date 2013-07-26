@@ -29,5 +29,6 @@
 Android is open source and Google releases the code under the Apache License.[12] This open source code and permissive licensing allows the software to be freely modified and distributed by device manufacturers, wireless carriers and enthusiast developers. Additionally, Android has a large community of developers writing applications ("apps") that extend the functionality of devices, written primarily in a customized version of the Java programming language.[16] In October 2012, there were approximately 700,000 apps available for Android, and the estimated number of applications downloaded from Google Play, Android\'s primary app store, was 25 billion.[17][18]</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="interpolator">Interpolator:</string>
 
 </resources>

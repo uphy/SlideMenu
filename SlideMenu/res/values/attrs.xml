@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<attr name="slideMenuStyle" format="reference" />
+
+    <attr name="slideMenuStyle" format="reference" />
+
     <declare-styleable name="SlideMenu_Layout">
         <attr name="layout_role" format="enum">
             <enum name="content" value="0" />
@@ -17,6 +19,7 @@
             <flag name="left" value="1" />
             <flag name="right" value="2" />
         </attr>
+        <attr name="interpolator" format="reference" />
     </declare-styleable>
 
 </resources>

@@ -1,7 +1,5 @@
 package com.aretha.slidemenudemo.widget;
 
-import com.aretha.slidemenudemo.fragment.BaseListFragment;
-
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

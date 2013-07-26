@@ -1,9 +1,9 @@
 package com.aretha.slidemenudemo.activitygroup;
 
-import com.aretha.slidemenudemo.R;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import com.aretha.slidemenudemo.R;
 
 public class PrimaryActivity extends FragmentActivity {
 	@Override
