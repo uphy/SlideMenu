@@ -389,6 +389,11 @@ public class SlideMenu extends ViewGroup {
 	 * @param slideMode
 	 */
 	public void setSlideMode(int slideMode) {
+		if (isAttacthedInContentView()) {
+			throw new IllegalStateException(
+					"SlidingMenu must be the root of layout");
+		}
+
 		if (mSlideMode == slideMode) {
 			return;
 		}
@@ -584,18 +589,17 @@ public class SlideMenu extends ViewGroup {
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			mVelocityTracker.clear();
 			mPressedX = mLastMotionX = x;
 			mIsTapContent = isTapContent(x, y);
 			if (mIsTapContent) {
 				mScroller.abortAnimation();
 			}
-			mVelocityTracker = VelocityTracker.obtain();
 			break;
 		case MotionEvent.ACTION_MOVE:
 			mVelocityTracker.addMovement(event);
 			if (Math.abs(x - mPressedX) >= mTouchSlop && isTapContent
 					&& currentState != STATE_DRAG) {
+				getParent().requestDisallowInterceptTouchEvent(true);
 				setCurrentState(STATE_DRAG);
 			}
 			if (STATE_DRAG != currentState) {
@@ -615,6 +619,8 @@ public class SlideMenu extends ViewGroup {
 			} else if (isTapContent) {
 				performContentClick();
 			}
+			mVelocityTracker.clear();
+			getParent().requestDisallowInterceptTouchEvent(false);
 			mIsTapContent = false;
 			break;
 		}
@@ -825,15 +831,11 @@ public class SlideMenu extends ViewGroup {
 				resolveSize(maxChildHeight, heightMeasureSpec));
 	}
 
-	@Override
-	protected void onAttachedToWindow() {
-		super.onAttachedToWindow();
+	private boolean isAttacthedInContentView() {
 		View parent = (View) getParent();
-		if (android.R.id.content != parent.getId()
-				&& MODE_SLIDE_CONTENT == mSlideMode) {
-			throw new IllegalStateException(
-					"SlidingMenu must be the root of layout");
-		}
+		return null != parent
+				&& (android.R.id.content == parent.getId() && MODE_SLIDE_CONTENT == mSlideMode)
+				&& (getRootView() == parent && MODE_SLIDE_WINDOW == mSlideMode);
 	}
 
 	@Override
