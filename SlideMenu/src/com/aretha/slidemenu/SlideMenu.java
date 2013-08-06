@@ -576,12 +576,11 @@ public class SlideMenu extends ViewGroup {
 			}
 		}
 
-		return super.onInterceptTouchEvent(ev);
+		return false;
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		super.onTouchEvent(event);
 		final float x = event.getX();
 		final float y = event.getY();
 		final int currentState = mCurrentState;
@@ -868,8 +867,8 @@ public class SlideMenu extends ViewGroup {
 			case LayoutParams.ROLE_SECONDARY_MENU:
 				mContentBoundsLeft = -measureWidth;
 				child.layout(r - paddingRight - measureWidth, statusBarHeight
-						+ paddingTop, r - paddingRight, statusBarHeight + t
-						+ measureHeight);
+						+ paddingTop, r - paddingRight, statusBarHeight
+						+ paddingTop + measureHeight);
 				break;
 			default:
 				continue;
