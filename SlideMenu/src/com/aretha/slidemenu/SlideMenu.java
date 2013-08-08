@@ -59,10 +59,10 @@ public class SlideMenu extends ViewGroup {
 	public final static int MODE_SLIDE_WINDOW = 1;
 	public final static int MODE_SLIDE_CONTENT = 2;
 
-	public final static int STATE_CLOSE = 1 << 0;
-	public final static int STATE_OPEN_LEFT = 1 << 1;
-	public final static int STATE_OPEN_RIGHT = 1 << 2;
-	public final static int STATE_DRAG = 1 << 3;
+	public final static int STATE_CLOSE = 1 << 0; // 1
+	public final static int STATE_OPEN_LEFT = 1 << 1; // 2
+	public final static int STATE_OPEN_RIGHT = 1 << 2; // 4
+	public final static int STATE_DRAG = 1 << 3; // 8
 	public final static int STATE_SCROLL = 1 << 4;
 	public final static int STATE_OPEN_MASK = 6;
 
@@ -107,6 +107,7 @@ public class SlideMenu extends ViewGroup {
 	private Drawable mDefaultContentBackground;
 
 	private OnSlideStateChangeListener mSlideStateChangeListener;
+	private OnContentTapListener mContentTapListener;
 
 	private VelocityTracker mVelocityTracker;
 	private Scroller mScroller;
@@ -433,6 +434,7 @@ public class SlideMenu extends ViewGroup {
 		} else {
 			mScroller.abortAnimation();
 			setCurrentOffset(targetOffset);
+			setCurrentState(isSlideLeft ? STATE_OPEN_LEFT : STATE_OPEN_RIGHT);
 		}
 	}
 
@@ -451,6 +453,7 @@ public class SlideMenu extends ViewGroup {
 		} else {
 			mScroller.abortAnimation();
 			setCurrentOffset(0);
+			setCurrentState(STATE_CLOSE);
 		}
 	}
 
@@ -491,6 +494,14 @@ public class SlideMenu extends ViewGroup {
 	public void setOnSlideStateChangeListener(
 			OnSlideStateChangeListener slideStateChangeListener) {
 		this.mSlideStateChangeListener = slideStateChangeListener;
+	}
+
+	public void setOnContentTapListener(OnContentTapListener contentTapListener) {
+		this.mContentTapListener = contentTapListener;
+	}
+
+	public OnContentTapListener getOnContentTapListener() {
+		return this.mContentTapListener;
 	}
 
 	/**
@@ -586,7 +597,8 @@ public class SlideMenu extends ViewGroup {
 		final int currentState = mCurrentState;
 		final boolean isTapContent = mIsTapContent;
 
-		switch (event.getAction()) {
+		final int action = event.getAction();
+		switch (action) {
 		case MotionEvent.ACTION_DOWN:
 			mPressedX = mLastMotionX = x;
 			mIsTapContent = isTapContent(x, y);
@@ -615,8 +627,8 @@ public class SlideMenu extends ViewGroup {
 			if (STATE_DRAG == currentState) {
 				mVelocityTracker.computeCurrentVelocity(1000);
 				endDrag(x, mVelocityTracker.getXVelocity());
-			} else if (isTapContent) {
-				performContentClick();
+			} else if (isTapContent && MotionEvent.ACTION_UP == action) {
+				performContentTap();
 			}
 			mVelocityTracker.clear();
 			getParent().requestDisallowInterceptTouchEvent(false);
@@ -682,9 +694,13 @@ public class SlideMenu extends ViewGroup {
 	/**
 	 * Perform click on the content
 	 */
-	public void performContentClick() {
+	public void performContentTap() {
 		if (isOpen()) {
 			smoothScrollContentTo(0);
+			return;
+		}
+		if (null != mContentTapListener) {
+			mContentTapListener.onContentTap(this);
 		}
 	}
 
@@ -1080,7 +1096,6 @@ public class SlideMenu extends ViewGroup {
 				break;
 			case ROLE_SECONDARY_MENU:
 			case ROLE_PRIMARY_MENU:
-				height = MATCH_PARENT;
 				break;
 			default:
 				throw new IllegalArgumentException(
@@ -1125,5 +1140,9 @@ public class SlideMenu extends ViewGroup {
 		 *            negative means slide left, otherwise slide right
 		 */
 		public void onSlideOffsetChange(float offsetPercent);
+	}
+
+	public interface OnContentTapListener {
+		public void onContentTap(SlideMenu slideMenu);
 	}
 }
